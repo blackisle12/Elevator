@@ -1,4 +1,5 @@
 ﻿using Elevator.Model;
+using System;
 
 namespace Elevator
 {
@@ -6,46 +7,26 @@ namespace Elevator
     {
         static void Main(string[] args)
         {
-            var noOfElevators = ReadInteger("How many elevators in the facility? (Default selected is 4)", defaultValue: 4);
-            var noOfFloors = ReadInteger("How many floors in the facility? (Default selected is 10)", defaultValue: 10);
-            var waitingTime = ReadInteger("How many second does an elevator wait on each floor? (Default selected is 10)", defaultValue: 10);
+            var noOfElevators = 4;
+            var noOfFloors = 10;
+            var waitingTime = 10000;
 
             Console.WriteLine("Initializing facility & its elevators....");
 
-            var facility = new Facility(noOfElevators, noOfFloors, waitingTime * 1000);
+            var facility = new Facility(noOfElevators, noOfFloors, waitingTime);
 
             RunElevators(facility);
 
-            while (true)
+            var random = new Random();
+
+            for (var i = 0; i < 50; i++)
             {
-                var currentFloor = ReadInteger($"What is your current floor? (From 1 to {noOfFloors}).", defaultValue: 1);
-                var selectedFloor = ReadInteger($"Now from your current floor of {currentFloor}, which floor do you want to go? (From 1 to {noOfFloors}).", defaultValue: currentFloor);
-                facility.SelectFloor(currentFloor, selectedFloor);
+                var currentFloor = random.Next(1, noOfFloors);
+                var selecteFloor = random.Next(1, noOfFloors);
+
+                facility.SelectFloor(currentFloor, selecteFloor);
+                Thread.Sleep(random.Next(2000, 5000));
             }
-        }
-
-        static int ReadInteger(string message, int defaultValue = 0)
-        {
-            var result = defaultValue;
-            var isValid = false;
-
-            while (!isValid)
-            {
-                Console.WriteLine(message);
-
-                var input = Console.ReadLine();
-
-                if (int.TryParse(input, out result))
-                {
-                    isValid = true;
-                }
-                else
-                {
-                    Console.WriteLine("Please input a valid number");
-                }
-            }
-
-            return result;
         }
 
         static void RunElevators(Facility facility)

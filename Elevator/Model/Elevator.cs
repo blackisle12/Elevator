@@ -23,12 +23,12 @@
             {
                 if (currentFloor == null)
                 {
-                    Console.WriteLine($"Elevator '{id}': Going to from floor '{Current}' floor '{selectedFloor}'");
+                    Console.WriteLine($"Elevator '{id}': Going from floor '{Current}' to floor '{selectedFloor}'");
                     Queue.Enqueue(selectedFloor);
                 }
                 else
                 {
-                    Console.WriteLine($"Elevator '{id}': Going from floor '{Current}' to floor '{currentFloor}' then to '{selectedFloor}'");
+                    Console.WriteLine($"Elevator '{id}': Currently on floor '{Current}', now moving to floor '{currentFloor}' and fetch passenger, then to '{selectedFloor}'");
                     Queue.Enqueue(currentFloor.Value);
                     Queue.Enqueue(selectedFloor);
                 }
